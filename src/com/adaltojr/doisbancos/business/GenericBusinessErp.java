@@ -3,21 +3,18 @@ package com.adaltojr.doisbancos.business;
 import java.lang.reflect.ParameterizedType;
 import java.util.Collection;
 import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
-import com.adaltojr.doisbancos.model.AbstractEntity;
-import com.adaltojr.doisbancos.repository.GenericRepository;
+import com.adaltojr.doisbancos.model.ERPAbstractEntity;
+import com.adaltojr.doisbancos.repository.ERPGenericRepository;
 
-public abstract class GenericBusinessErp <T extends AbstractEntity> implements GenericRepository<T>{
+public abstract class GenericBusinessErp <T extends ERPAbstractEntity> implements ERPGenericRepository<T>{
 
-	 	@PersistenceContext(unitName="erpdbpu")
-	    protected final EntityManager manager;
+	    protected final EntityManager entityManager;
 	 	protected final Class<T> clazz;
 	    
-	 	
-	 	protected GenericBusinessErp(EntityManager manager) {
+	 	protected GenericBusinessErp(ERPEntityManager entityManager) {
 			
-	 		this.manager = EntityManagerErp.getEntityManager();
+	 		this.entityManager = entityManager.get();
 	 		
 			@SuppressWarnings("unchecked")
 			Class<T> clazz = (Class<T>) ((ParameterizedType) getClass().getGenericSuperclass()).getActualTypeArguments()[0];
@@ -26,12 +23,11 @@ public abstract class GenericBusinessErp <T extends AbstractEntity> implements G
 		}
 	 	
 	 	public T save(T entity) {
-			return manager.merge(entity);
+			return entityManager.merge(entity);
 		}
-	 	
 	   
 		public Collection<T> loadAll() {
-			Query query = manager.createQuery("from " + clazz.getName());
+			Query query = entityManager.createQuery("from " + clazz.getName());
 
 			@SuppressWarnings("unchecked")
 			Collection<T> resultList = query.getResultList();
@@ -40,11 +36,11 @@ public abstract class GenericBusinessErp <T extends AbstractEntity> implements G
 		}
 
 		public T loadById(Long id) {
-			return manager.find(clazz, id);
+			return entityManager.find(clazz, id);
 		}
 
 		public void remove(T entity) {
-			manager.remove(manager.getReference(clazz, entity.getId()));
+			entityManager.remove(entityManager.getReference(clazz, entity.getId()));
 		}
 	 	
 }

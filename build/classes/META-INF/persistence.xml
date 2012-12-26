@@ -16,11 +16,11 @@
 		</properties>
 	</persistence-unit>
 	
-	<persistence-unit name="erpdbpu" transaction-type="RESOURCE_LOCAL">
-	<provider>org.hibernate.ejb.HibernatePersistence</provider>
-		<class>com.adaltojr.doisbancos.bd2.model.UsuarioErp</class>
-		<properties>			
-			<property name="hibernate.dialect" value="org.hibernate.dialect.MySQL5InnoDBDialect" />
+	<persistence-unit name="erpdbpu">
+    	<provider>org.hibernate.ejb.HibernatePersistence</provider>
+    	<class>com.adaltojr.doisbancos.bd2.model.UsuarioErp</class>
+    	<properties>
+      		<property name="hibernate.dialect" value="org.hibernate.dialect.MySQL5InnoDBDialect" />
 			<property name="hibernate.hbm2ddl.auto" value="update" />
 			<property name="hibernate.show_sql" value="true"/>
 			<property name="hibernate.format_sql" value="true"/>
@@ -29,7 +29,7 @@
 			<property name="hibernate.connection.url" value="jdbc:mysql://192.168.0.12:3306/dois_bancos_teste2" />
 			<property name="hibernate.connection.username" value="websys" />
 			<property name="hibernate.connection.password" value="websys321" />
-		</properties>
-	</persistence-unit>
+    	</properties>
+   </persistence-unit>
 	
 </persistence>
