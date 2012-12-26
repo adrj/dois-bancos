@@ -12,9 +12,9 @@ public abstract class GenericBusiness<T extends AbstractEntity> implements Gener
 	protected final EntityManager entityManager;
 	protected final Class<T> clazz;
 
-	protected GenericBusiness(DefaultEntityManager entityManager) {
+	protected GenericBusiness(EntityManager entityManager) {
 
-		this.entityManager = entityManager.get();
+		this.entityManager = entityManager;
 
 		@SuppressWarnings("unchecked")
 		Class<T> clazz = (Class<T>) ((ParameterizedType) getClass().getGenericSuperclass()).getActualTypeArguments()[0];
